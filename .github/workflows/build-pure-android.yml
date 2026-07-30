@@ -138,8 +138,9 @@ jobs:
 
       - name: Build .deb package
         env:
-          OPENCODE_RUNTIME_INPUT: out/bundle/opencode-termux-aarch64
-          OPENCODE_PREFIX_DIR: out/staged/prefix
+          OPENCODE_RUNTIME_INPUT: ${{ github.workspace }}/out/bundle/opencode-termux-aarch64
+          OPENCODE_PREFIX_DIR: ${{ github.workspace }}/out/staged/prefix
+          STAGED_PREFIX: ${{ github.workspace }}/out/staged/prefix
           VERSION: ${{ github.event.inputs.opencode_version || '' }}
           ARCH_DEB: aarch64
         run: |
