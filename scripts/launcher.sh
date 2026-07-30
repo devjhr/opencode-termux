@@ -1,4 +1,4 @@
-#!/data/data/com.termux/files/usr/bin/bash
+#!/data/data/com.jahangir/files/usr/bin/bash
 # scripts/launcher.sh — OpenCode launcher for Termux
 set -euo pipefail
 

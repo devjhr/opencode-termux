@@ -1,10 +1,10 @@
-#!/data/data/com.termux/files/usr/bin/bash
+#!/data/data/com.jahangir/files/usr/bin/bash
 set -euo pipefail
 
 TARGET_HOST="${TARGET_HOST:-192.168.1.22}"
 TARGET_PORT="${TARGET_PORT:-8022}"
 TARGET_USER="${TARGET_USER:-u0_a258}"
-TARGET_HOME="/data/data/com.termux/files/home"
+TARGET_HOME="/data/data/com.jahangir/files/home"
 # SSH auth/hardening knobs (override via env):
 #   TARGET_PASSWORD    password for sshpass (default preserves legacy behavior)
 #   SSH_STRICT_HOST_KEY StrictHostKeyChecking mode; 'accept-new' detects key
@@ -109,11 +109,11 @@ last_name="${remote_names[${#remote_names[@]} - 1]}"
 logfile="$TARGET_HOME/${PKG_NAME}-upgrade-matrix-$(date +%Y%m%d-%H%M%S).log"
 
 ssh_exec "set -euo pipefail; if ! dpkg --audit >/dev/null 2>&1; then echo 'Warning: dpkg audit reported issues' >&2; fi; if ! apt -f install -y >/dev/null 2>&1; then echo 'Warning: dependency repair failed' >&2; fi; exec > >(tee -a $logfile) 2>&1; echo LOG=$logfile; echo === baseline install ===; apt install -y $first_name; $PKG_NAME --version"
-ssh_exec "set -euo pipefail; hr=/data/data/com.termux/files/usr/lib/opencode/tools/run-system-skills.sh; if [[ -x \"\$hr\" ]]; then OPENCODE_HOOK_STRICT=0 OPENCODE_HOOK_ENABLE_NETWORK=0 \"\$hr\" post_install; fi"
+ssh_exec "set -euo pipefail; hr=/data/data/com.jahangir/files/usr/lib/opencode/tools/run-system-skills.sh; if [[ -x \"\$hr\" ]]; then OPENCODE_HOOK_STRICT=0 OPENCODE_HOOK_ENABLE_NETWORK=0 \"\$hr\" post_install; fi"
 
 for n in "${remote_names[@]}"; do
 	ssh_exec "set -euo pipefail; echo === upgrade/install $(basename "$n") ===; apt install -y $n; $PKG_NAME --version; if ! $PKG_NAME run hi >/dev/null 2>&1; then echo 'Warning: smoke command failed' >&2; fi"
-	ssh_exec "set -euo pipefail; hr=/data/data/com.termux/files/usr/lib/opencode/tools/run-system-skills.sh; if [[ -x \"\$hr\" ]]; then OPENCODE_HOOK_STRICT=0 OPENCODE_HOOK_ENABLE_NETWORK=0 \"\$hr\" post_upgrade; fi"
+	ssh_exec "set -euo pipefail; hr=/data/data/com.jahangir/files/usr/lib/opencode/tools/run-system-skills.sh; if [[ -x \"\$hr\" ]]; then OPENCODE_HOOK_STRICT=0 OPENCODE_HOOK_ENABLE_NETWORK=0 \"\$hr\" post_upgrade; fi"
 done
 
 ssh_exec "set -euo pipefail; echo === downgrade latest to first ===; apt install -y $first_name; $PKG_NAME --version; echo === reinstall latest ===; apt install -y --reinstall $last_name; $PKG_NAME --version; echo === final state ===; if ! dpkg -l | grep -E '^(ii|hi)\\s+($PKG_NAME|glibc|openssl-glibc|glibc-runner)'; then echo 'Warning: expected package rows were not found' >&2; fi; echo MATRIX_DONE"

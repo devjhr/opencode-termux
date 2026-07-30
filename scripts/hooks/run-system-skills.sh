@@ -1,8 +1,8 @@
-#!/data/data/com.termux/files/usr/bin/bash
+#!/data/data/com.jahangir/files/usr/bin/bash
 set -euo pipefail
 
 EVENT="${1:-post_install}"
-PREFIX="${PREFIX:-/data/data/com.termux/files/usr}"
+PREFIX="${PREFIX:-/data/data/com.jahangir/files/usr}"
 CFG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/opencode"
 SYS_SKILL_DIR="$PREFIX/lib/opencode/system-skills"
 USER_SKILL_DIR="$CFG_DIR/system-skills"

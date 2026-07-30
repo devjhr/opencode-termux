@@ -1,4 +1,4 @@
-#!/data/data/com.termux/files/usr/bin/bash
+#!/data/data/com.jahangir/files/usr/bin/bash
 # tools/produce-local.sh — Build OpenCode for Termux
 # Downloads from npm + wraps with bun-termux-loader
 set -euo pipefail
@@ -22,7 +22,7 @@ fi
 VER="$INPUT_VER"
 
 CACHE_DIR="${CACHE_DIR:-$HOME/.cache/opencode-termux}"
-LOADER_DIR="/data/data/com.termux/files/home/bun-termux-loader"
+LOADER_DIR="/data/data/com.jahangir/files/home/bun-termux-loader"
 EXTRACT="${TMPDIR:-$PREFIX/tmp}/produce-$$"
 mkdir -p "$RUNTIME_DIR" "$CACHE_DIR" "$EXTRACT"
 trap 'rm -rf "$EXTRACT"' EXIT

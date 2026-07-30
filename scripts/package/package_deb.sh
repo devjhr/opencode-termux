@@ -1,8 +1,8 @@
-#!/data/data/com.termux/files/usr/bin/bash
+#!/data/data/com.jahangir/files/usr/bin/bash
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-PREFIX="${PREFIX:-/data/data/com.termux/files/usr}"
+PREFIX="${PREFIX:-/data/data/com.jahangir/files/usr}"
 STAGED_PREFIX="${STAGED_PREFIX:-$ROOT_DIR/artifacts/staged/prefix}"
 MAINTAINER="${MAINTAINER:-Hope2333(幽零小喵) <u0catmiao@proton.me>}"
 
@@ -61,12 +61,12 @@ INSTALLED_SIZE=$(du -sk "$DEB_ROOT" | cut -f1)
 echo "Installed-Size: $INSTALLED_SIZE" >>"$DEB_ROOT/DEBIAN/control"
 
 cat >"$DEB_ROOT/DEBIAN/postinst" <<'POSTINST'
-#!/data/data/com.termux/files/usr/bin/bash
+#!/data/data/com.jahangir/files/usr/bin/bash
 set -e
 echo "OpenCode for Termux installed"
 echo "Run: opencode --version"
 echo "Runtime: glibc (bun-termux-loader wrapped)"
-HOOK_RUNNER="/data/data/com.termux/files/usr/lib/opencode/tools/run-system-skills.sh"
+HOOK_RUNNER="/data/data/com.jahangir/files/usr/lib/opencode/tools/run-system-skills.sh"
 if [[ -x "$HOOK_RUNNER" ]]; then
   OPENCODE_HOOK_STRICT=0 OPENCODE_HOOK_ENABLE_NETWORK=0 "$HOOK_RUNNER" post_install || true
 fi
@@ -75,9 +75,9 @@ POSTINST
 chmod 755 "$DEB_ROOT/DEBIAN/postinst"
 
 cat >"$DEB_ROOT/DEBIAN/prerm" <<'PRERM'
-#!/data/data/com.termux/files/usr/bin/bash
+#!/data/data/com.jahangir/files/usr/bin/bash
 set -e
-HOOK_RUNNER="/data/data/com.termux/files/usr/lib/opencode/tools/run-system-skills.sh"
+HOOK_RUNNER="/data/data/com.jahangir/files/usr/lib/opencode/tools/run-system-skills.sh"
 if [[ -x "$HOOK_RUNNER" ]]; then
   OPENCODE_HOOK_STRICT=0 OPENCODE_HOOK_ENABLE_NETWORK=0 "$HOOK_RUNNER" pre_remove || true
 fi
@@ -86,9 +86,9 @@ PRERM
 chmod 755 "$DEB_ROOT/DEBIAN/prerm"
 
 cat >"$DEB_ROOT/DEBIAN/postrm" <<'POSTRM'
-#!/data/data/com.termux/files/usr/bin/bash
+#!/data/data/com.jahangir/files/usr/bin/bash
 set -e
-HOOK_RUNNER="/data/data/com.termux/files/usr/lib/opencode/tools/run-system-skills.sh"
+HOOK_RUNNER="/data/data/com.jahangir/files/usr/lib/opencode/tools/run-system-skills.sh"
 if [[ -x "$HOOK_RUNNER" ]]; then
   OPENCODE_HOOK_STRICT=0 OPENCODE_HOOK_ENABLE_NETWORK=0 "$HOOK_RUNNER" post_remove || true
 fi
