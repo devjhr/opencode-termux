@@ -65,11 +65,14 @@ jobs:
           set -euo pipefail
           cd out/build/opencode-source
           bun install 2>&1 | tail -3
-          # Build for linux-arm64 (output: opencode-linux-arm64)
+          # Build for linux-arm64 (output: dist/opencode-linux-arm64/opencode)
           cd packages/opencode
-          bun run build --target=linux-arm64 2>&1 | tail -10
-          # Locate output
-          BIN="$(find ../.. -name "opencode-linux-arm64" -type f 2>/dev/null | head -1 || true)"
+          bun run build 2>&1 | tail -15
+          # Locate binary inside the target-specific dist directory
+          BIN="$(find ../dist/opencode-linux-arm64 -type f 2>/dev/null | head -1 || true)"
+          if [[ -z "$BIN" ]]; then
+            BIN="$(find ../.. -path "*/opencode-linux-arm64/*" -type f 2>/dev/null | head -1 || true)"
+          fi
           if [[ -n "$BIN" ]]; then
             cp "$BIN" "$GITHUB_WORKSPACE/out/bundle/opencode-linux-arm64"
             file "$GITHUB_WORKSPACE/out/bundle/opencode-linux-arm64"
