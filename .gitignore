@@ -19,6 +19,7 @@ packaging/pacman/src/
 .work/
 
 # Session artifacts / temp test files
+build_log.txt
 26003091@session*
 f1.bin
 f2.bin
