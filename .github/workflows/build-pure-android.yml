@@ -134,7 +134,7 @@ jobs:
 
       - name: Install dpkg for deb packaging
         run: |
-          sudo apt-get install -y -qq dpkg dpkg-deb
+          sudo apt-get install -y -qq dpkg-dev
 
       - name: Build .deb package
         env:
