@@ -129,6 +129,22 @@ jobs:
             exit 1
           fi
 
+      - name: Install dpkg for deb packaging
+        run: |
+          sudo apt-get install -y -qq dpkg dpkg-deb
+
+      - name: Build .deb package
+        env:
+          OPENCODE_RUNTIME_INPUT: out/bundle/opencode-termux-aarch64
+          OPENCODE_PREFIX_DIR: out/staged/prefix
+          VERSION: ${{ github.event.inputs.opencode_version || '' }}
+          ARCH_DEB: aarch64
+        run: |
+          set -euo pipefail
+          bash scripts/build.sh
+          bash scripts/package/package_deb.sh
+          cp packaging/dpkg/opencode_*.deb out/bundle/
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
