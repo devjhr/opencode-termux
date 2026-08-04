@@ -54,7 +54,7 @@ Maintainer: $MAINTAINER
 Section: utils
 Priority: optional
 Description: OpenCode AI coding assistant for Termux
-Depends: bash, ncurses
+Depends: bash, ncurses, glibc, openssl-glibc
 EOF
 
 INSTALLED_SIZE=$(du -sk "$DEB_ROOT" | cut -f1)
